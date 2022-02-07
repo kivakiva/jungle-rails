@@ -5,18 +5,13 @@ class OrdersController < ApplicationController
     @line_items = LineItem.where(order_id: params[:id])
 
     
-    line_item_id = {}
+    line_item_info = {}
     
     @line_items.each do |item|
-      line_item_id[item.id] = item.quantity
+      line_item_info[item.id] = item.quantity
     end
-    puts "line items"
-    puts @line_items.inspect
-    puts "line item 6 human feet shoes"
-    puts @line_items[6]
-
-    # @enhanced_order ||= Product.find(id: line_item_id).map {|product| { product:product, quantity: @line_items[product.id.to_s] } }
-    @enhanced_order ||= Product.find(line_item_id.keys).map {|product| { product:product, quantity: line_item_id[product.id] } }
+    
+    @enhanced_order ||= Product.find(line_item_info.keys).map {|product| { product:product, quantity: line_item_info[product.id] } }
 
   end
 
